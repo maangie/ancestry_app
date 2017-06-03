@@ -32,6 +32,10 @@ gem 'ancestry'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry-rails'
+  gem 'pry-doc'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
 end
 
 group :development do
