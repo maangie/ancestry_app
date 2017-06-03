@@ -1,0 +1,5 @@
+<li>
+  <%= link_to comment.content, comment %>
+  <%= link_to 'Edit', edit_comment_path(comment) %>
+  <%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+</li>
