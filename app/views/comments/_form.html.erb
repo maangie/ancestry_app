@@ -14,9 +14,17 @@
   <div class="field">
     <%= form.label :content %>
     <%= form.text_area :content, id: :comment_content %>
+
+    <% if comment.parent %>
+      <%= hidden_field_tag :parent_id, comment.parent.id %>
+    <% end %>
   </div>
 
   <div class="actions">
+    <% if comment.persisted? %>
+      <%= link_to 'New Subcomment', comment_new_path(comment) %>
+    <% end %>
+
     <%= form.submit %>
   </div>
 <% end %>

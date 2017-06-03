@@ -5,5 +5,7 @@
   <%= @comment.content %>
 </p>
 
+<ul><%= render @comment.children %></ul>
+
 <%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+<%= link_to 'Back', @comment.parent ? @comment.parent : comments_path %>

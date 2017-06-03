@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @comments = Comment.roots
   end
 
   # GET /comments/1
@@ -24,7 +24,11 @@ class CommentsController < ApplicationController
   # POST /comments
   # POST /comments.json
   def create
-    @comment = Comment.new(comment_params)
+    if (parent_id = params[:parent_id])
+      @comment = Comment.find(parent_id).children.new(comment_params)
+    else
+      @comment = Comment.new(comment_params)
+    end
 
     respond_to do |format|
       if @comment.save
@@ -56,9 +60,18 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html do
+        url = @comment.parent ? @comment.parent : comments_url
+        redirect_to url, notice: 'Comment was successfully destroyed.'
+      end
+
       format.json { head :no_content }
     end
+  end
+
+  def new_subcomment
+    @comment =Comment.find(params[:comment_id]).children.new
+    render :new
   end
 
   private
